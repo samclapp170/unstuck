@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sam Clapp — Tech Help</title>
+<meta name="description" content="Friendly, plain-language tech help in Atlanta. Get more out of the devices, apps, and services you already have. Sessions start at $40.">
+
+<meta property="og:title" content="Sam Clapp — Tech Help">
+<meta property="og:description" content="Get more out of the tech you already have. Friendly, plain-language help in Atlanta. Sessions start at $40.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://help.samclapp.net/">
+
+<!-- Seven-stroke mark as an inline favicon, so this page has no external image dependencies -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 124 62'%3E%3Cline x1='14' y1='56' x2='14' y2='36' stroke='%23223A80' stroke-width='7' stroke-linecap='round'/%3E%3Cline x1='30' y1='56' x2='30' y2='20' stroke='%237C2E2C' stroke-width='7' stroke-linecap='round'/%3E%3Cline x1='46' y1='56' x2='46' y2='28' stroke='%23D7A82E' stroke-width='7' stroke-linecap='round'/%3E%3Cline x1='62' y1='56' x2='62' y2='12' stroke='%232F6742' stroke-width='7' stroke-linecap='round'/%3E%3Cline x1='78' y1='56' x2='78' y2='24' stroke='%23223A80' stroke-width='7' stroke-linecap='round'/%3E%3Cline x1='94' y1='56' x2='94' y2='16' stroke='%237C2E2C' stroke-width='7' stroke-linecap='round'/%3E%3Cline x1='110' y1='56' x2='110' y2='32' stroke='%23D7A82E' stroke-width='7' stroke-linecap='round'/%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=Hanken+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --ink:     #241F1A;
+    --kraft:   #E6D4AC;
+    --cobalt:  #223A80;
+    --oxblood: #7C2E2C;
+    --ochre:   #D7A82E;
+    --pine:    #2F6742;
+    --cream:   #F3EEE4;
+    --paper:   #FBF8F1;
+    --rule:    #EDE6D7;
+    --muted:   #5C564D;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Hanken Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 17px;
+    line-height: 1.6;
+  }
+
+  .wrap {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 22px;
+  }
+
+  /* ---------- Header ---------- */
+
+  header {
+    background: var(--paper);
+    border-bottom: 1px solid var(--rule);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 14px 0;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    text-decoration: none;
+  }
+  .brand svg { display: block; flex: none; }
+  .brand span {
+    font-family: 'Spectral', serif;
+    font-size: 19px;
+    font-weight: 500;
+    color: var(--ink);
+    white-space: nowrap;
+  }
+  .header-call {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 14px;
+    color: var(--oxblood);
+    text-decoration: none;
+    white-space: nowrap;
+    font-weight: 500;
+  }
+  .header-call:hover { text-decoration: underline; }
+
+  /* ---------- Hero ---------- */
+
+  .hero { padding: 44px 0 8px; }
+
+  .eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+
+  h1 {
+    font-family: 'Spectral', serif;
+    font-weight: 600;
+    font-size: clamp(30px, 7vw, 44px);
+    line-height: 1.14;
+    margin: 0 0 18px;
+    letter-spacing: -0.01em;
+  }
+
+  .lede {
+    font-size: clamp(17px, 2.4vw, 19px);
+    line-height: 1.6;
+    color: #3A342C;
+    margin: 0 0 28px;
+  }
+  .lede strong { color: var(--ink); font-weight: 600; }
+
+  /* ---------- Call to action ---------- */
+
+  .cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    padding: 15px 26px;
+    border-radius: 999px;
+    font-size: 17px;
+    font-weight: 600;
+    text-decoration: none;
+    border: 1.5px solid transparent;
+    transition: transform .12s ease, background .12s ease;
+    min-height: 52px;          /* comfortable tap target */
+    flex: 0 0 auto;
+  }
+  .btn:active { transform: translateY(1px); }
+  .btn-primary {
+    background: var(--ink);
+    color: var(--cream);
+  }
+  .btn-primary:hover { background: #3A322A; }
+  .btn-secondary {
+    background: transparent;
+    color: var(--ink);
+    border-color: #D8CDB4;
+  }
+  .btn-secondary:hover { background: var(--cream); }
+
+  .cta-note {
+    font-size: 14.5px;
+    color: var(--muted);
+    margin: 0 0 40px;
+  }
+
+  /* ---------- Featured block ---------- */
+
+  .featured {
+    background: var(--kraft);
+    border: 1px solid #D9C79C;
+    border-radius: 14px;
+    padding: 22px 24px;
+    margin-bottom: 44px;
+  }
+  .featured h2 {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-size: 17px;
+    font-weight: 600;
+    margin: 0 0 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    line-height: 1.35;
+  }
+  .featured h2::before {
+    content: "";
+    width: 11px; height: 11px;
+    border-radius: 50%;
+    background: var(--ochre);
+    flex: none;
+  }
+  .featured p { margin: 0; font-size: 16px; color: #423B32; }
+
+  /* ---------- Sections ---------- */
+
+  section { margin-bottom: 46px; }
+
+  h2.section-title {
+    font-family: 'Spectral', serif;
+    font-size: 25px;
+    font-weight: 600;
+    margin: 0 0 20px;
+  }
+
+  .services {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 22px 30px;
+  }
+  .service h3 {
+    font-size: 16.5px;
+    font-weight: 600;
+    margin: 0 0 5px;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+  }
+  .service h3::before {
+    content: "";
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    flex: none;
+    background: var(--c, var(--cobalt));
+  }
+  .service p {
+    margin: 0;
+    padding-left: 18px;   /* aligns with title text, clear of the dot */
+    font-size: 15.5px;
+    color: #4A443B;
+    line-height: 1.55;
+  }
+
+  /* ---------- Pricing ---------- */
+
+  .pricing {
+    background: var(--ink);
+    color: var(--cream);
+    border-radius: 16px;
+    padding: 28px 26px;
+  }
+  .pricing .label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1.6px;
+    text-transform: uppercase;
+    color: var(--ochre);
+    margin-bottom: 8px;
+  }
+  .price {
+    font-family: 'Spectral', serif;
+    font-size: 40px;
+    font-weight: 600;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .price span {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--kraft);
+    margin-left: 8px;
+  }
+  .price-sub {
+    font-size: 15px;
+    color: var(--kraft);
+    margin-bottom: 18px;
+  }
+  .price-terms {
+    border-top: 1px solid #443C33;
+    padding-top: 16px;
+    font-size: 15px;
+    color: #DCCFB2;
+    margin: 0;
+  }
+
+  /* ---------- Footer ---------- */
+
+  footer {
+    border-top: 1px solid var(--rule);
+    padding: 30px 0 46px;
+    font-size: 15px;
+    color: var(--muted);
+  }
+  .footer-cta {
+    font-family: 'Spectral', serif;
+    font-style: italic;
+    font-size: 19px;
+    color: var(--ink);
+    margin: 0 0 14px;
+  }
+  .footer-contact {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 15px;
+    line-height: 1.9;
+  }
+  .footer-contact a { color: var(--oxblood); text-decoration: none; }
+  .footer-contact a:hover { text-decoration: underline; }
+  .footer-area { margin-top: 16px; font-size: 14px; }
+
+  /* ---------- Mobile ---------- */
+
+  @media (max-width: 620px) {
+    body { font-size: 16.5px; }
+    .services { grid-template-columns: 1fr; gap: 18px; }
+    .hero { padding-top: 32px; }
+    .btn { flex: 1 1 100%; }
+    .header-call { font-size: 13px; }
+    .brand span { font-size: 17px; }
+    .featured, .pricing { padding: 20px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap header-inner">
+    <a class="brand" href="/">
+      <svg width="44" height="23" viewBox="0 0 124 62" fill="none" aria-hidden="true">
+        <line x1="14"  y1="56" x2="14"  y2="36" stroke="#223A80" stroke-width="6" stroke-linecap="round"/>
+        <line x1="30"  y1="56" x2="30"  y2="20" stroke="#7C2E2C" stroke-width="6" stroke-linecap="round"/>
+        <line x1="46"  y1="56" x2="46"  y2="28" stroke="#D7A82E" stroke-width="6" stroke-linecap="round"/>
+        <line x1="62"  y1="56" x2="62"  y2="12" stroke="#2F6742" stroke-width="6" stroke-linecap="round"/>
+        <line x1="78"  y1="56" x2="78"  y2="24" stroke="#223A80" stroke-width="6" stroke-linecap="round"/>
+        <line x1="94"  y1="56" x2="94"  y2="16" stroke="#7C2E2C" stroke-width="6" stroke-linecap="round"/>
+        <line x1="110" y1="56" x2="110" y2="32" stroke="#D7A82E" stroke-width="6" stroke-linecap="round"/>
+      </svg>
+      <span>Sam Clapp</span>
+    </a>
+    <a class="header-call" href="tel:+14048085270">404.808.5270</a>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="hero">
+    <div class="eyebrow">Tech Help, Your Pace</div>
+    <h1>Get more out of the tech you already have.</h1>
+    <p class="lede">
+      Most tech headaches aren't solved by buying something new — they're solved by using what
+      you've already got more effectively. I help people <strong>fix what's broken</strong>,
+      <strong>streamline how they work</strong>, and <strong>set up tools</strong> that actually
+      make life easier — from a quick account fix to a full home network build.
+    </p>
+
+    <!-- ==================================================================
+         INTAKE FORM SLOT
+         When the Google Form is ready, paste its share link into FORM_URL
+         in the script at the bottom of this file. A "Start here" button
+         appears automatically and this section needs no other edits.
+         ================================================================== -->
+    <div class="cta" id="cta">
+      <a class="btn btn-primary" href="tel:+14048085270">Call or text</a>
+      <a class="btn btn-secondary" href="mailto:samlclapp@gmail.com?subject=Tech%20Help">Email me</a>
+    </div>
+    <p class="cta-note" id="cta-note">
+      Tell me what's going on in plain language — no jargon required, and no obligation.
+    </p>
+  </div>
+
+  <div class="featured">
+    <h2>Start here: better use of what you already own</h2>
+    <p>
+      This is where most people should start. If your devices, apps, and subscriptions aren't
+      working as well as they could — or your day-to-day process around them is clunky — I'll
+      find the friction and clean it up before recommending anything new to buy.
+    </p>
+  </div>
+
+  <section>
+    <h2 class="section-title">Where I can help</h2>
+    <div class="services">
+      <div class="service" style="--c: var(--cobalt);">
+        <h3>Troubleshooting &amp; fixes</h3>
+        <p>Phone, laptop, desktop, or account acting up? I diagnose it and fix it.</p>
+      </div>
+      <div class="service" style="--c: var(--oxblood);">
+        <h3>Home network &amp; smart home</h3>
+        <p>Wi-Fi dead zones, router setups, and smart home automation with Home Assistant.</p>
+      </div>
+      <div class="service" style="--c: var(--pine);">
+        <h3>Self-hosted cloud &amp; media</h3>
+        <p>Your own private alternative to Google Drive or iCloud, and a music library you stream yourself — no subscription.</p>
+      </div>
+      <div class="service" style="--c: var(--cobalt);">
+        <h3>AI agents &amp; automation</h3>
+        <p>Personal AI assistants and automations that take the busywork off your plate, set up the way you want.</p>
+      </div>
+      <div class="service" style="--c: var(--ochre);">
+        <h3>Custom databases &amp; catalogs</h3>
+        <p>Got a collection or inventory to track — books, gear, records? I'll build a simple database made for exactly what you need.</p>
+      </div>
+      <div class="service" style="--c: var(--oxblood);">
+        <h3>Better processes &amp; habits</h3>
+        <p>Sometimes the fix isn't technical — it's the routine around the tool. I'll help you find a simpler way to do it.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title">What it costs</h2>
+    <div class="pricing">
+      <div class="label">First session</div>
+      <div class="price">$40<span>up to an hour</span></div>
+      <div class="price-sub">$75/hr after that &middot; $50/hr remote</div>
+      <p class="price-terms">
+        No subscriptions, no contracts. Bigger projects get a written quote before any work
+        starts, and I never buy anything on your behalf without your sign-off first.
+      </p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="footer-cta">Have something that's bugging you? Let's fix it.</p>
+    <div class="footer-contact">
+      <a href="tel:+14048085270">404.808.5270</a><br>
+      <a href="mailto:samlclapp@gmail.com?subject=Tech%20Help">samlclapp@gmail.com</a>
+    </div>
+    <div class="footer-area">
+      Serving Grant Park, Cabbagetown, Decatur, Tucker, and all points between.<br>
+      Creative problem-solving and process improvement &middot; References available.
+    </div>
+  </div>
+</footer>
+
+<script>
+  /* ------------------------------------------------------------------
+     Paste the Google Form share link between the quotes and save.
+     Leave it empty and the page keeps the call/email buttons as-is.
+     ------------------------------------------------------------------ */
+  var FORM_URL = "/start";
+
+  (function () {
+    if (!FORM_URL) return;
+
+    var cta = document.getElementById('cta');
+    var note = document.getElementById('cta-note');
+
+    var start = document.createElement('a');
+    start.className = 'btn btn-primary';
+    start.href = FORM_URL;
+    start.textContent = 'Start here';
+
+    // Form becomes the primary action; calling stays available, styled back.
+    var call = cta.querySelector('.btn-primary');
+    if (call) {
+      call.className = 'btn btn-secondary';
+      call.textContent = 'Or call / text';
+    }
+    var email = cta.querySelector('a[href^="mailto"]');
+    if (email) email.remove();
+
+    cta.insertBefore(start, cta.firstChild);
+
+    if (note) {
+      note.textContent = "Takes about three minutes. Answer what you can and skip what you can't — “I don’t know” is a fine answer to anything technical.";
+    }
+  })();
+</script>
+
+</body>
+</html>
