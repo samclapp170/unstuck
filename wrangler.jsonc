@@ -1,17 +1,17 @@
 {
-  // Cloudflare Workers static-assets config for help.samclapp.net
+  // Cloudflare Workers static-assets config for unstuck.samclapp.net
   // Deploy with:  npx wrangler deploy
   //
   // This is a separate Worker from "tools-git" — deploying it does not touch
   // tools.samclapp.net or any of its files.
-  "name": "help",
+  "name": "unstuck",
   "compatibility_date": "2026-08-13",
   "assets": {
     "directory": "./public"
   },
   "routes": [
     {
-      "pattern": "help.samclapp.net",
+      "pattern": "unstuck.samclapp.net",
       "custom_domain": true
     }
   ]
