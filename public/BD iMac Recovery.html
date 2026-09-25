@@ -1,0 +1,372 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Becky's iMac Recovery</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Hanken+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap');
+
+  :root {
+    --ink: #241F1A;
+    --kraft: #E6D4AC;
+    --cream: #F3EEE4;
+    --cobalt: #223A80;
+    --oxblood: #7C2E2C;
+    --ochre: #D7A82E;
+    --pine: #2F6742;
+
+    --bg: var(--kraft);
+    --card-bg: var(--cream);
+    --text: var(--ink);
+    --text-muted: #5C564D;
+    --rule: #DCC998;
+    --header-bg: #FBF8F1;
+    --header-rule: #EDE6D7;
+    color-scheme: light;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #1C1712;
+      --card-bg: #2A241C;
+      --text: #F3EEE4;
+      --text-muted: #B9AE9A;
+      --rule: #3E3626;
+      --header-bg: #201A14;
+      --header-rule: #362E22;
+      --cobalt: #5B79C4;
+      --oxblood: #C25B58;
+      --pine: #4E9366;
+      color-scheme: dark;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --bg: #1C1712;
+    --card-bg: #2A241C;
+    --text: #F3EEE4;
+    --text-muted: #B9AE9A;
+    --rule: #3E3626;
+    --header-bg: #201A14;
+    --header-rule: #362E22;
+    --cobalt: #5B79C4;
+    --oxblood: #C25B58;
+    --pine: #4E9366;
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Hanken Grotesk', -apple-system, sans-serif;
+    padding-inline: 16px;
+    padding-block: 0 40px;
+  }
+
+  header.site {
+    background: var(--header-bg);
+    border-bottom: 1px solid var(--header-rule);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 20px 8px;
+    margin-inline: -16px;
+    margin-bottom: 44px;
+  }
+
+  header.site .wordmark {
+    font-family: 'Spectral', serif;
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  header.site .tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-left: auto;
+  }
+
+  main {
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--rule);
+    border-radius: 14px;
+    padding: 44px clamp(24px, 6vw, 56px);
+    box-shadow: 0 1px 2px rgba(36, 31, 26, 0.06);
+  }
+
+  .dateline {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin: 0 0 28px;
+  }
+
+  h1.title {
+    font-family: 'Spectral', serif;
+    font-weight: 600;
+    font-size: clamp(26px, 4.5vw, 32px);
+    line-height: 1.2;
+    text-wrap: balance;
+    margin: 0 0 6px;
+    color: var(--text);
+  }
+
+  p.greeting {
+    font-family: 'Spectral', serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: 19px;
+    margin: 0 0 20px;
+  }
+
+  p.lede {
+    font-size: 16.5px;
+    line-height: 1.65;
+    color: var(--text);
+    margin: 0 0 8px;
+  }
+
+  .ticks {
+    display: flex;
+    align-items: flex-end;
+    gap: 7px;
+    height: 20px;
+    margin: 40px 0 32px;
+  }
+  .ticks span {
+    display: block;
+    width: 3px;
+    border-radius: 2px;
+    background: var(--cobalt);
+  }
+  .ticks span:nth-child(1) { height: 60%; background: var(--cobalt); }
+  .ticks span:nth-child(2) { height: 100%; background: var(--oxblood); }
+  .ticks span:nth-child(3) { height: 45%; background: var(--ochre); }
+  .ticks span:nth-child(4) { height: 80%; background: var(--pine); }
+  .ticks span:nth-child(5) { height: 55%; background: var(--cobalt); }
+
+  section { margin-bottom: 6px; }
+
+  h2 {
+    font-family: 'Spectral', serif;
+    font-weight: 600;
+    font-size: 21px;
+    color: var(--text);
+    margin: 0 0 14px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--ochre);
+    display: inline-block;
+  }
+
+  p {
+    font-size: 16px;
+    line-height: 1.68;
+    margin: 0 0 14px;
+  }
+
+  p:last-child { margin-bottom: 0; }
+
+  strong { font-weight: 600; }
+
+  .status-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 4px 0 18px;
+  }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.03em;
+    padding: 7px 13px 7px 11px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--pine) 14%, transparent);
+    color: var(--text);
+    border: 1px solid color-mix(in srgb, var(--pine) 35%, transparent);
+  }
+  .chip.pending {
+    background: color-mix(in srgb, var(--ochre) 18%, transparent);
+    border-color: color-mix(in srgb, var(--ochre) 45%, transparent);
+  }
+  .chip .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--pine);
+    flex: none;
+  }
+  .chip.pending .dot { background: var(--ochre); }
+  .chip b { font-family: 'Hanken Grotesk', sans-serif; font-weight: 600; }
+
+  ol.steps {
+    list-style: none;
+    margin: 4px 0 0;
+    padding: 0;
+    counter-reset: step;
+  }
+  ol.steps li {
+    counter-increment: step;
+    display: flex;
+    gap: 14px;
+    padding: 12px 0;
+    border-top: 1px solid var(--rule);
+    font-size: 16px;
+    line-height: 1.6;
+  }
+  ol.steps li:first-child { border-top: none; padding-top: 4px; }
+  ol.steps li::before {
+    content: counter(step);
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 500;
+    font-size: 13px;
+    flex: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--cobalt);
+    color: var(--cream);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2px;
+  }
+
+  .signoff {
+    margin-top: 36px;
+  }
+  .signoff p { margin: 0 0 4px; }
+  .signoff .signature {
+    font-family: 'Spectral', serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: 22px;
+    margin-top: 6px;
+    color: var(--cobalt);
+  }
+
+  .callout {
+    margin-top: 16px;
+    padding: 14px 18px;
+    border-left: 3px solid var(--oxblood);
+    background: color-mix(in srgb, var(--oxblood) 9%, transparent);
+    border-radius: 0 8px 8px 0;
+  }
+  .callout p { margin: 0; font-size: 15.5px; }
+  .callout strong { color: var(--oxblood); }
+
+  footer.page {
+    max-width: 640px;
+    margin: 24px auto 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-muted);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+</style>
+
+<header class="site">
+  <svg width="42" height="22" viewBox="0 0 124 62" fill="none" aria-hidden="true">
+    <line x1="14" y1="56" x2="14" y2="36" stroke="#223A80" stroke-width="6" stroke-linecap="round"/>
+    <line x1="30" y1="56" x2="30" y2="20" stroke="#7C2E2C" stroke-width="6" stroke-linecap="round"/>
+    <line x1="46" y1="56" x2="46" y2="28" stroke="#D7A82E" stroke-width="6" stroke-linecap="round"/>
+    <line x1="62" y1="56" x2="62" y2="12" stroke="#2F6742" stroke-width="6" stroke-linecap="round"/>
+    <line x1="78" y1="56" x2="78" y2="24" stroke="#223A80" stroke-width="6" stroke-linecap="round"/>
+    <line x1="94" y1="56" x2="94" y2="16" stroke="#7C2E2C" stroke-width="6" stroke-linecap="round"/>
+    <line x1="110" y1="56" x2="110" y2="32" stroke="#D7A82E" stroke-width="6" stroke-linecap="round"/>
+  </svg>
+  <span class="wordmark">Sam Clapp</span>
+  <span class="tag">Unstuck &middot; Personal Tech Help</span>
+</header>
+
+<main>
+  <div class="card">
+    <p class="dateline">September 25, 2026</p>
+    <h1 class="title">Your iMac: What Happened and What's Next</h1>
+    <p class="greeting">Hi Becky,</p>
+    <p class="lede">Your iMac gave us a scare there for a minute, but the good news is everything's recovered and it's running clean now. Here's the full rundown, plus what to expect going forward.</p>
+
+    <div class="ticks" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+
+    <section>
+      <h2>What happened</h2>
+      <p>So here's the deal: your iMac was mid-way through a routine software update (reinstalling macOS, its operating system) when the process got interrupted. That left it unable to start up normally.</p>
+      <p>Nothing was physically wrong with the computer, and it wasn't a hard drive failure either &mdash; the update just didn't finish, so the files it needs to boot were incomplete.</p>
+      <p>Here's the important part though: all your stuff, documents, photos, email, all of it, was still sitting safely on the drive the whole time. It just wasn't accessible until the computer could start up again.</p>
+    </section>
+
+    <section style="margin-top: 34px;">
+      <h2>What I did to fix it</h2>
+      <p>Before I touched anything else, my first move was making sure nothing was at risk of being lost. I used some professional data-recovery software to carefully read your iMac's drive and copy every recoverable file onto a separate external hard drive, and I left your original iMac drive completely untouched the whole time, just in case. That recovery process took several days to run through everything (it's a lot of data!).</p>
+      <p>Once I'd confirmed everything copied over safely, I installed a fresh, clean copy of macOS &mdash; the same version you had, Monterey &mdash; onto your iMac. It's running like a brand new computer now: fast, and free of whatever caused the original hiccup. I didn't call the recovery "done" until all of that was locked down.</p>
+    </section>
+
+    <section style="margin-top: 34px;">
+      <h2>Where things stand right now</h2>
+      <div class="status-row">
+        <span class="chip"><span class="dot"></span><b>Mail</b>&nbsp;&mdash; done</span>
+        <span class="chip pending"><span class="dot"></span><b>Photos</b>&nbsp;&mdash; almost done</span>
+      </div>
+      <p>Mail is already set up and working normally on the freshly installed iMac &mdash; nothing you need to do there. I'm still in the process of bringing your photo library back in, but it's going smoothly. Once it wraps up, your photos will show up organized by date, same as before.</p>
+    </section>
+
+    <section style="margin-top: 34px;">
+      <h2>Where your files are now</h2>
+      <p>Everything recovered from your old iMac, including all your Documents, is saved on an external hard drive labeled <strong>&ldquo;Becky Drysdale Backup.&rdquo;</strong> Think of it as a big safety box holding everything from your old computer.</p>
+      <p>To find your Documents: plug in the drive, open it, then open the folder called <strong>&ldquo;Disk Drill,&rdquo;</strong> then open <strong>&ldquo;Documents.&rdquo;</strong> One thing worth knowing: because of how the recovery had to work, your files are sorted by file type rather than your original folders (all your PDFs together, all your Word docs together, that kind of thing). Your original folder setup couldn't be recovered, so you might have to poke through a couple of type folders to find something specific, but everything that could be saved is in there.</p>
+    </section>
+
+    <section style="margin-top: 34px;">
+      <h2>What you'll want to do next</h2>
+      <ol class="steps">
+        <li>Keep the "Becky Drysdale Backup" drive somewhere handy and plug it in whenever you want to dig up an older file.</li>
+        <li>Copy anything you use a lot (a few key documents, say) from the drive onto your iMac itself, so it's there without needing the drive plugged in.</li>
+        <li>Once Photos finishes bringing your library back in, there's nothing you need to do &mdash; it'll just show up.</li>
+        <li>Can't find something? Just holler and I'll help you track it down.</li>
+      </ol>
+    </section>
+
+    <section style="margin-top: 34px;">
+      <h2>Automatic backups going forward</h2>
+      <p>To make sure this doesn't sneak up on you again, I also set up automatic backups for your iMac. On that same "Becky Drysdale Backup" drive, I created a second, separate section called <strong>&ldquo;Time Machine&rdquo;</strong> and set your iMac up to back itself up to it automatically.</p>
+      <p>That's a totally separate space on the drive from your recovered files, dedicated just to ongoing backups. As long as you plug the drive in every so often, macOS will keep a running, up-to-date backup of everything on your iMac. So if anything ever goes sideways again, we'd be able to get you back up and running in minutes instead of days.</p>
+      <div class="callout">
+        <p><strong>One thing to watch for:</strong> leave the drive plugged in, and make sure it's actually getting power, not just connected by USB. That's exactly what caused your old backups to quietly stop back in January &mdash; the USB cable was connected the whole time, but the drive's power cable wasn't, so nothing was actually backing up even though it looked plugged in. Double-check both cables are in, and you'll be covered.</p>
+      </div>
+    </section>
+
+    <div class="signoff">
+      <p>Let me know if anything doesn't make sense!</p>
+      <p class="signature">Sam</p>
+    </div>
+  </div>
+
+  <footer class="page">
+    <svg width="20" height="11" viewBox="0 0 124 62" fill="none" aria-hidden="true">
+      <line x1="14" y1="56" x2="14" y2="36" stroke="#223A80" stroke-width="8" stroke-linecap="round"/>
+      <line x1="46" y1="56" x2="46" y2="28" stroke="#D7A82E" stroke-width="8" stroke-linecap="round"/>
+      <line x1="78" y1="56" x2="78" y2="24" stroke="#223A80" stroke-width="8" stroke-linecap="round"/>
+      <line x1="110" y1="56" x2="110" y2="32" stroke="#D7A82E" stroke-width="8" stroke-linecap="round"/>
+    </svg>
+    <span>Prepared by Sam Clapp for Becky Drysdale</span>
+  </footer>
+</main>
+
+</body></html>
