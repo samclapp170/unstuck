@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Sam Clapp — Tech Help</title>
+<title>Unstuck — Tech Help from Sam Clapp</title>
 <meta name="description" content="Friendly, plain-language tech help in Atlanta. Get more out of the devices, apps, and services you already have. Sessions start at $40.">
 
-<meta property="og:title" content="Sam Clapp — Tech Help">
+<meta property="og:title" content="Unstuck — Tech Help from Sam Clapp">
 <meta property="og:description" content="Get more out of the tech you already have. Friendly, plain-language help in Atlanta. Sessions start at $40.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://help.samclapp.net/">
+<meta property="og:url" content="https://unstuck.samclapp.net/">
 
 <!-- Seven-stroke mark as an inline favicon, so this page has no external image dependencies -->
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 124 62'%3E%3Cline x1='14' y1='56' x2='14' y2='36' stroke='%23223A80' stroke-width='7' stroke-linecap='round'/%3E%3Cline x1='30' y1='56' x2='30' y2='20' stroke='%237C2E2C' stroke-width='7' stroke-linecap='round'/%3E%3Cline x1='46' y1='56' x2='46' y2='28' stroke='%23D7A82E' stroke-width='7' stroke-linecap='round'/%3E%3Cline x1='62' y1='56' x2='62' y2='12' stroke='%232F6742' stroke-width='7' stroke-linecap='round'/%3E%3Cline x1='78' y1='56' x2='78' y2='24' stroke='%23223A80' stroke-width='7' stroke-linecap='round'/%3E%3Cline x1='94' y1='56' x2='94' y2='16' stroke='%237C2E2C' stroke-width='7' stroke-linecap='round'/%3E%3Cline x1='110' y1='56' x2='110' y2='32' stroke='%23D7A82E' stroke-width='7' stroke-linecap='round'/%3E%3C/svg%3E">
@@ -230,6 +230,21 @@
     line-height: 1.55;
   }
 
+  /* ---------- Safety snapshot ---------- */
+
+  .snapshot {
+    border: 1px solid #D8CDB4;
+    border-left: 4px solid var(--pine);
+    border-radius: 12px;
+    padding: 20px 22px;
+    background: #fff;
+  }
+  .snapshot p { margin: 0 0 10px; font-size: 16px; color: #423B32; }
+  .snapshot p:last-child { margin-bottom: 0; }
+  .snapshot ul { margin: 0 0 12px; padding-left: 20px; font-size: 16px; color: #423B32; }
+  .snapshot li { margin-bottom: 4px; }
+  .snapshot .aside { font-size: 15px; color: var(--muted); }
+
   /* ---------- Pricing ---------- */
 
   .pricing {
@@ -306,7 +321,7 @@
     .btn { flex: 1 1 100%; }
     .header-call { font-size: 13px; }
     .brand span { font-size: 17px; }
-    .featured, .pricing { padding: 20px; }
+    .featured, .pricing, .snapshot { padding: 20px; }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -328,16 +343,16 @@
         <line x1="94"  y1="56" x2="94"  y2="16" stroke="#7C2E2C" stroke-width="6" stroke-linecap="round"/>
         <line x1="110" y1="56" x2="110" y2="32" stroke="#D7A82E" stroke-width="6" stroke-linecap="round"/>
       </svg>
-      <span>Sam Clapp</span>
+      <span>Unstuck</span>
     </a>
-    <a class="header-call" href="tel:+14048085270">404.808.5270</a>
+    <a class="header-call" href="tel:+16785155721">678.515.5721</a>
   </div>
 </header>
 
 <main class="wrap">
 
   <div class="hero">
-    <div class="eyebrow">Tech Help, Your Pace</div>
+    <div class="eyebrow">Unstuck &middot; Tech help from Sam Clapp</div>
     <h1>Get more out of the tech you already have.</h1>
     <p class="lede">
       Most tech headaches aren't solved by buying something new — they're solved by using what
@@ -346,27 +361,22 @@
       make life easier — from a quick account fix to a full home network build.
     </p>
 
-    <!-- ==================================================================
-         INTAKE FORM SLOT
-         When the Google Form is ready, paste its share link into FORM_URL
-         in the script at the bottom of this file. A "Start here" button
-         appears automatically and this section needs no other edits.
-         ================================================================== -->
-    <div class="cta" id="cta">
-      <a class="btn btn-primary" href="sms:+14048085270?body=Hey,%20Sam,%20Help!">Call or text</a>
-      <a class="btn btn-secondary" href="mailto:samlclapp@gmail.com?subject=Tech%20Help">Email me</a>
+    <div class="cta">
+      <a class="btn btn-primary" href="/start">Tell me what's going on</a>
+      <a class="btn btn-secondary" href="sms:+16785155721?body=Hi%20Sam,%20I%20could%20use%20some%20help.">Or call / text</a>
     </div>
-    <p class="cta-note" id="cta-note">
-      Tell me what's going on in plain language — no jargon required, and no obligation.
+    <p class="cta-note">
+      A short form, about three minutes. Answer what you can and skip what you can't &mdash;
+      &ldquo;I don&rsquo;t know&rdquo; is a fine answer to anything technical.
     </p>
   </div>
 
   <div class="featured">
-    <h2>Start here: better use of what you already own</h2>
+    <h2>First, get more from what you already own</h2>
     <p>
-      This is where most people should start. If your devices, apps, and subscriptions aren't
-      working as well as they could — or your day-to-day process around them is clunky — I'll
-      find the friction and clean it up before recommending anything new to buy.
+      If your devices, apps, and subscriptions aren't working as well as they could &mdash; or the
+      routine around them is clunky &mdash; I'll find the friction and clean it up before
+      recommending anything new to buy.
     </p>
   </div>
 
@@ -400,6 +410,27 @@
     </div>
   </section>
 
+  <section id="snapshot">
+    <h2 class="section-title">Before I touch anything</h2>
+    <div class="snapshot">
+      <p>
+        At the start of an in-person visit, I take a quick <strong>safety snapshot</strong> of your
+        computer from a USB drive. It takes about a minute and runs while we talk. If anything goes
+        sideways, I know exactly how your computer was set up and where every file belonged.
+      </p>
+      <ul>
+        <li><strong>What it records:</strong> which apps are installed, the names and locations of your
+          files and folders, and settings like printers, Wi-Fi network names, and browser bookmarks.</li>
+        <li><strong>What it doesn't:</strong> your documents, photos, email, or passwords. It only
+          reads; nothing on your computer is changed.</li>
+        <li><strong>Who can see it:</strong> only me. It's encrypted the moment it's saved, so it's
+          unreadable if the drive is ever lost.</li>
+        <li><strong>How long it's kept:</strong> 30 days, then it's deleted automatically.</li>
+      </ul>
+      <p class="aside">Rather I skip it? Just say so &mdash; it's your call.</p>
+    </div>
+  </section>
+
   <section>
     <h2 class="section-title">What it costs</h2>
     <div class="pricing">
@@ -419,8 +450,8 @@
   <div class="wrap">
     <p class="footer-cta">Have something that's bugging you? Let's fix it.</p>
     <div class="footer-contact">
-      <a href="sms:+14048085270?body=Hey,%20Sam!%20I%20need%20your%20help!">404.808.5270</a><br>
-      <a href="mailto:samlclapp@gmail.com?subject=Tech%20Help">samlclapp@gmail.com</a>
+      <a href="sms:+16785155721?body=Hi%20Sam,%20I%20could%20use%20some%20help.">678.515.5721</a><br>
+      <a href="mailto:samlclapp@gmail.com?subject=Unstuck">samlclapp@gmail.com</a>
     </div>
     <div class="footer-area">
       Serving Grant Park, Cabbagetown, Decatur, Tucker, and all points between.<br>
@@ -428,41 +459,6 @@
     </div>
   </div>
 </footer>
-
-<script>
-  /* ------------------------------------------------------------------
-     Paste the Google Form share link between the quotes and save.
-     Leave it empty and the page keeps the call/email buttons as-is.
-     ------------------------------------------------------------------ */
-  var FORM_URL = "/start";
-
-  (function () {
-    if (!FORM_URL) return;
-
-    var cta = document.getElementById('cta');
-    var note = document.getElementById('cta-note');
-
-    var start = document.createElement('a');
-    start.className = 'btn btn-primary';
-    start.href = FORM_URL;
-    start.textContent = 'Start here';
-
-    // Form becomes the primary action; calling stays available, styled back.
-    var call = cta.querySelector('.btn-primary');
-    if (call) {
-      call.className = 'btn btn-secondary';
-      call.textContent = 'Or call / text';
-    }
-    var email = cta.querySelector('a[href^="mailto"]');
-    if (email) email.remove();
-
-    cta.insertBefore(start, cta.firstChild);
-
-    if (note) {
-      note.textContent = "Takes about three minutes. Answer what you can and skip what you can't — “I don’t know” is a fine answer to anything technical.";
-    }
-  })();
-</script>
 
 </body>
 </html>
