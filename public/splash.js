@@ -1,4 +1,4 @@
-/*!
+/*! v2 (JS-driven tootling) —
  * Sam Clapp splash interstitial
  * Include in <head> of every page, no defer/async:
  *   <script src="/splash.js"></script>
