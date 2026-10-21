@@ -35,13 +35,6 @@
       var b = BARS[i], x = b[0], top = b[1], c = b[2];
       s += '<line x1="' + x + '" y1="56" x2="' + x + '" y2="' + top +
         '" stroke="' + c + '" stroke-width="5" stroke-linecap="round">';
-      if (!REDUCE) {
-        var up = Math.max(top - 8, 4), down = Math.min(top + 12, 48);
-        var v = [top, up, down, top].join(';');
-        s += '<animate attributeName="y2" values="' + v + '" dur="' + DURS[i] +
-          's" begin="-' + (i * 0.17).toFixed(2) + 's" repeatCount="indefinite" ' +
-          'calcMode="spline" keySplines=".45 0 .55 1;.45 0 .55 1;.45 0 .55 1"/>';
-      }
       s += '</line>';
     }
     return s + '</svg>';
@@ -69,10 +62,31 @@
   root.appendChild(style);
   root.appendChild(overlay);
 
+  // Tootling: drive each bar's top with a sine wave (works in every browser;
+  // the baseline at y=56 never moves).
+  var lines = overlay.querySelectorAll('line');
+  var raf = 0, t0 = 0;
+  function frame(now) {
+    if (!t0) t0 = now;
+    var t = (now - t0) / 1000;
+    for (var i = 0; i < lines.length; i++) {
+      var top = BARS[i][1];
+      var y = top + 9 * Math.sin(2 * Math.PI * (t / DURS[i] + i * 0.19)) - 2;
+      lines[i].setAttribute('y2', Math.max(6, Math.min(46, y)).toFixed(2));
+    }
+    raf = requestAnimationFrame(frame);
+  }
+  function startAnim() { if (!REDUCE && !raf) raf = requestAnimationFrame(frame); }
+  function stopAnim() { if (raf) { cancelAnimationFrame(raf); raf = 0; t0 = 0; } }
+
   function show(instant) {
     overlay.className = instant ? 'instant on' : 'on';
+    startAnim();
   }
-  function hide() { overlay.className = ''; }
+  function hide() {
+    overlay.className = '';
+    setTimeout(stopAnim, 400); // after the fade-out
+  }
 
   // --- Arrival ---
   var started = Date.now();
