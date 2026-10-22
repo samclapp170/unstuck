@@ -1,4 +1,4 @@
-/*! v3 (JS-driven tootling + random toot sound) —
+/*! v4 (splash waits for the toot sound to start) —
  * Sam Clapp splash interstitial
  * Include in <head> of every page, no defer/async:
  *   <script src="/splash.js"></script>
@@ -98,20 +98,31 @@
     ['/sounds/toot-guitar.mp3', 0.80],
     ['/sounds/toot-orchestra.mp3', 1.00]
   ];
+  var SOUND_WAIT_MS = 2500;  // longest the splash will wait for a clip to start
+  var SOUND_HOLD_MS = 900;   // keep the splash up this long after the clip starts
   var MUTE_KEY = 'sc-splash-mute', LAST_KEY = 'sc-splash-last';
   function muted() { try { return localStorage.getItem(MUTE_KEY) === '1'; } catch (e) { return false; } }
+  // Returns a promise: true once the clip is actually audible, false if muted,
+  // blocked by the browser, or too slow (so the splash never hangs).
   function playToot() {
-    if (muted() || !SOUNDS.length) return;
-    try {
-      var last = parseInt(sessionStorage.getItem(LAST_KEY), 10);
-      var i = Math.floor(Math.random() * SOUNDS.length);
-      if (SOUNDS.length > 1 && i === last) i = (i + 1 + Math.floor(Math.random() * (SOUNDS.length - 1))) % SOUNDS.length;
-      sessionStorage.setItem(LAST_KEY, String(i));
-      var a = new Audio(SOUNDS[i][0]);
-      a.volume = SOUNDS[i][1];
-      var pr = a.play();
-      if (pr && pr.catch) pr.catch(function () {}); // blocked by autoplay policy: stay silent
-    } catch (e) {}
+    return new Promise(function (resolve) {
+      if (muted() || !SOUNDS.length) { resolve(false); return; }
+      var done = false;
+      function fin(ok) { if (!done) { done = true; resolve(ok); } }
+      try {
+        var last = parseInt(sessionStorage.getItem(LAST_KEY), 10);
+        var i = Math.floor(Math.random() * SOUNDS.length);
+        if (SOUNDS.length > 1 && i === last) i = (i + 1 + Math.floor(Math.random() * (SOUNDS.length - 1))) % SOUNDS.length;
+        sessionStorage.setItem(LAST_KEY, String(i));
+        var a = new Audio(SOUNDS[i][0]);
+        a.preload = 'auto';
+        a.volume = SOUNDS[i][1];
+        a.addEventListener('playing', function () { fin(true); });
+        var pr = a.play();
+        if (pr && pr.catch) pr.catch(function () { fin(false); }); // blocked by autoplay policy
+        setTimeout(function () { fin(false); }, SOUND_WAIT_MS);
+      } catch (e) { fin(false); }
+    });
   }
   function addMuteButton() {
     if (!SOUNDS.length || !document.body) return;
@@ -145,15 +156,23 @@
   var carried = false;
   try { carried = sessionStorage.getItem(FLAG) === '1'; sessionStorage.removeItem(FLAG); } catch (e) {}
   show(true); // cover the page immediately, no fade-in
-  playToot();
+  var soundAt = 0, soundSettled = false, pageLoaded = false;
+  playToot().then(function (ok) { if (ok) soundAt = Date.now(); soundSettled = true; finishArrival(); });
 
+  var arrivalDone = false;
   function finishArrival() {
+    // Hold the splash until the page has loaded AND the sound has started
+    // (or been ruled out), then let the animation play out under the toot.
+    if (arrivalDone || !pageLoaded || !soundSettled) return;
+    arrivalDone = true;
     var min = carried ? CARRY_MS : ARRIVE_MS;
     var wait = Math.max(0, min - (Date.now() - started));
+    if (soundAt) wait = Math.max(wait, soundAt + SOUND_HOLD_MS - Date.now());
     setTimeout(hide, wait);
   }
-  if (document.readyState === 'complete') finishArrival();
-  else window.addEventListener('load', finishArrival);
+  function onLoaded() { pageLoaded = true; finishArrival(); }
+  if (document.readyState === 'complete') onLoaded();
+  else window.addEventListener('load', onLoaded);
   setTimeout(hide, 6000); // safety net
 
   // Back/forward cache: never show a stale splash
