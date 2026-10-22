@@ -1,4 +1,4 @@
-/*! v2 (JS-driven tootling) —
+/*! v3 (JS-driven tootling + random toot sound) —
  * Sam Clapp splash interstitial
  * Include in <head> of every page, no defer/async:
  *   <script src="/splash.js"></script>
@@ -88,11 +88,64 @@
     setTimeout(stopAnim, 400); // after the fade-out
   }
 
+  // --- Sound: a random "toot" each time the splash plays ---------------------
+  // Clips live in /sounds/. Add a style by adding a file and a line here.
+  // Browsers only allow sound after the visitor has interacted with the site,
+  // so the first arrival may be silent; clicking any link unlocks it.
+  var SOUNDS = [
+    ['/sounds/toot-banjo.mp3', 0.85],
+    ['/sounds/toot-flute.mp3', 0.75],
+    ['/sounds/toot-guitar.mp3', 0.80],
+    ['/sounds/toot-orchestra.mp3', 1.00]
+  ];
+  var MUTE_KEY = 'sc-splash-mute', LAST_KEY = 'sc-splash-last';
+  function muted() { try { return localStorage.getItem(MUTE_KEY) === '1'; } catch (e) { return false; } }
+  function playToot() {
+    if (muted() || !SOUNDS.length) return;
+    try {
+      var last = parseInt(sessionStorage.getItem(LAST_KEY), 10);
+      var i = Math.floor(Math.random() * SOUNDS.length);
+      if (SOUNDS.length > 1 && i === last) i = (i + 1 + Math.floor(Math.random() * (SOUNDS.length - 1))) % SOUNDS.length;
+      sessionStorage.setItem(LAST_KEY, String(i));
+      var a = new Audio(SOUNDS[i][0]);
+      a.volume = SOUNDS[i][1];
+      var pr = a.play();
+      if (pr && pr.catch) pr.catch(function () {}); // blocked by autoplay policy: stay silent
+    } catch (e) {}
+  }
+  function addMuteButton() {
+    if (!SOUNDS.length || !document.body) return;
+    var b = document.createElement('button');
+    b.id = 'sc-mute'; b.type = 'button';
+    function paint() {
+      var m = muted();
+      b.setAttribute('aria-label', m ? 'Turn splash sound on' : 'Mute splash sound');
+      b.title = m ? 'Splash sound: off' : 'Splash sound: on';
+      b.innerHTML = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z"/>' +
+        (m ? '<path d="M17 9l5 6M22 9l-5 6"/>' : '<path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/>') + '</svg>';
+    }
+    b.addEventListener('click', function (e) {
+      e.stopPropagation();
+      try { localStorage.setItem(MUTE_KEY, muted() ? '0' : '1'); } catch (err) {}
+      paint();
+      if (!muted()) playToot(); // preview on un-mute
+    });
+    paint();
+    document.body.appendChild(b);
+  }
+  var css2 = '#sc-mute{position:fixed;right:14px;bottom:14px;z-index:2147483000;width:34px;height:34px;' +
+    'display:flex;align-items:center;justify-content:center;border:1px solid #d9cfb8;border-radius:50%;' +
+    'background:#f6f0e1;color:#5C564D;cursor:pointer;padding:0;opacity:.75;transition:opacity .15s}' +
+    '#sc-mute:hover,#sc-mute:focus-visible{opacity:1}@media print{#sc-mute{display:none}}';
+  style.appendChild(document.createTextNode(css2));
+  if (document.body) addMuteButton(); else document.addEventListener('DOMContentLoaded', addMuteButton);
+
   // --- Arrival ---
   var started = Date.now();
   var carried = false;
   try { carried = sessionStorage.getItem(FLAG) === '1'; sessionStorage.removeItem(FLAG); } catch (e) {}
   show(true); // cover the page immediately, no fade-in
+  playToot();
 
   function finishArrival() {
     var min = carried ? CARRY_MS : ARRIVE_MS;
