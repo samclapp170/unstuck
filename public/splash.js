@@ -1,4 +1,4 @@
-/*! v4 (splash waits for the toot sound to start) —
+/*! v5 (toot plays on click, page leaves when it ends) —
  * Sam Clapp splash interstitial
  * Include in <head> of every page, no defer/async:
  *   <script src="/splash.js"></script>
@@ -102,13 +102,13 @@
   var SOUND_HOLD_MS = 900;   // keep the splash up this long after the clip starts
   var MUTE_KEY = 'sc-splash-mute', LAST_KEY = 'sc-splash-last';
   function muted() { try { return localStorage.getItem(MUTE_KEY) === '1'; } catch (e) { return false; } }
-  // Returns a promise: true once the clip is actually audible, false if muted,
-  // blocked by the browser, or too slow (so the splash never hangs).
+  // Returns a promise: the Audio element once the clip is actually audible, or
+  // null if muted, blocked by the browser, or too slow (so the splash never hangs).
   function playToot() {
     return new Promise(function (resolve) {
-      if (muted() || !SOUNDS.length) { resolve(false); return; }
+      if (muted() || !SOUNDS.length) { resolve(null); return; }
       var done = false;
-      function fin(ok) { if (!done) { done = true; resolve(ok); } }
+      function fin(a) { if (!done) { done = true; resolve(a); } }
       try {
         var last = parseInt(sessionStorage.getItem(LAST_KEY), 10);
         var i = Math.floor(Math.random() * SOUNDS.length);
@@ -117,11 +117,11 @@
         var a = new Audio(SOUNDS[i][0]);
         a.preload = 'auto';
         a.volume = SOUNDS[i][1];
-        a.addEventListener('playing', function () { fin(true); });
+        a.addEventListener('playing', function () { fin(a); });
         var pr = a.play();
-        if (pr && pr.catch) pr.catch(function () { fin(false); }); // blocked by autoplay policy
-        setTimeout(function () { fin(false); }, SOUND_WAIT_MS);
-      } catch (e) { fin(false); }
+        if (pr && pr.catch) pr.catch(function () { fin(null); }); // blocked by autoplay policy
+        setTimeout(function () { fin(null); }, SOUND_WAIT_MS);
+      } catch (e) { fin(null); }
     });
   }
   function addMuteButton() {
@@ -157,7 +157,8 @@
   try { carried = sessionStorage.getItem(FLAG) === '1'; sessionStorage.removeItem(FLAG); } catch (e) {}
   show(true); // cover the page immediately, no fade-in
   var soundAt = 0, soundSettled = false, pageLoaded = false;
-  playToot().then(function (ok) { if (ok) soundAt = Date.now(); soundSettled = true; finishArrival(); });
+  if (carried) { soundSettled = true; } // the toot already played when the link was clicked
+  else playToot().then(function (a) { if (a) soundAt = Date.now(); soundSettled = true; finishArrival(); });
 
   var arrivalDone = false;
   function finishArrival() {
@@ -197,6 +198,13 @@
     e.preventDefault();
     try { sessionStorage.setItem(FLAG, '1'); } catch (err) {}
     show(false);
-    setTimeout(function () { location.href = url.href; }, OUT_MS);
+    var left = false, t0 = Date.now();
+    function go() { if (!left) { left = true; location.href = url.href; } }
+    playToot().then(function (a) {
+      if (!a) { setTimeout(go, Math.max(0, OUT_MS - (Date.now() - t0))); return; }
+      a.addEventListener('ended', go);
+      var d = isFinite(a.duration) && a.duration > 0 ? a.duration * 1000 : 1500;
+      setTimeout(go, Math.min(d, 2000) + 150); // safety if 'ended' never fires
+    });
   }, false);
 })();
